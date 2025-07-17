@@ -12,12 +12,12 @@ main(args: Array<String>): Int64 {
     let domain = args[0]
     let server = args[1]
 
-    let reqMsg = MessageBuilder(id: ID()).addQuestion(Question(Name(domain), TypeAAAA, ClassIN)).build()
+    let reqMsg = MessageBuilder(id: ID()).addQuestion(Question(Name(domain), TypeA, ClassIN)).build()
     let payload = reqMsg.toBytes()
 
     let bytes = Array<UInt8>(512, repeat: 0) 
 
-    try (udpSocket = UdpSocket(bindAt: 8888)) {
+    try (udpSocket = UdpSocket(bindAt: 0)) {
         udpSocket.sendTimeout = Duration.second * 2
         udpSocket.receiveTimeout = Duration.second * 2
         udpSocket.bind()
@@ -30,10 +30,10 @@ main(args: Array<String>): Int64 {
     println("Response ID: ${respMsg.header.id}")
     println("Is response: ${respMsg.header.flags.response}")
     for (question in respMsg.questions) {
-        println("Question: ${question.name} ${question.qType} ${question.qClass}")
+        println("Question: ${question.name} ${getTypeName(question.qType)} ${getClassName(question.qClass)}")
     }
     for (answer in respMsg.answers) {
-        println("Answer: ${answer.name} ${answer.rType} ${answer.rClass} TTL: ${answer.ttl} Data: ${answer.rData}")
+        println("Answer: ${answer.name} ${getTypeName(answer.rType)} ${getClassName(answer.rClass)} ${answer.ttl} ${answer.rData}")
     }
 
     return 0
