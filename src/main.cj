@@ -81,14 +81,18 @@ func printServer(serverURL: URL): Unit {
 }
 
 func printMessage(msg: Message): Unit {
-    println("Message ID: ${msg.header.id}")
-    println("Is response: ${msg.header.flags.response}")
+    println("Header Section:")
+    println("   Transaction ID: ${msg.header.id} ")
+    println("   Flags: QR: ${msg.header.flags.response} Opcode: ${msg.header.flags.opCode} AA: ${msg.header.flags.authoritative} TC: ${msg.header.flags.truncated} RD: ${msg.header.flags.recursionDesired} RA: ${msg.header.flags.recursionAvailable} RCODE: ${msg.header.flags.rCode}")
+    println("   Questions: ${msg.header.qdCount} Answer RRs: ${msg.header.anCount} Authority RRs: ${msg.header.nsCount} Additional RRs: ${msg.header.arCount}")
+    println("Questions Section:")
     for (question in msg.questions) {
-        println("Question: ${question.name} ${getTypeName(question.qType)} ${getClassName(question.qClass)}")
+        println("   ${question.name} ${getTypeName(question.qType)} ${getClassName(question.qClass)}")
     }
+    println("Answers Section:")
     for (answer in msg.answers) {
         println(
-            "Answer: ${answer.name} ${getTypeName(answer.rType)} ${getClassName(answer.rClass)} ${answer.ttl} ${answer.rData}")
+            "   ${answer.name} ${getTypeName(answer.rType)} ${getClassName(answer.rClass)} ${answer.ttl} ${answer.rData}")
     }
 }
 
