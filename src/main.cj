@@ -1,11 +1,5 @@
 package cnslookup
 
-import std.net.*
-import std.io.*
-import std.convert.*
-import stdx.encoding.url.*
-import stdx.net.tls.*
-import stdx.net.http.*
 import dnsmsg.*
 
 main(args: Array<String>): Int64 {
