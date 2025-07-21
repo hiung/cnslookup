@@ -16,7 +16,7 @@ dnsmsg = { git = "https://github.com/hiung/dnsmsg.git" }
 
 [target.x86_64-w64-mingw32]                                              
   [target.x86_64-w64-mingw32.bin-dependencies]
-    path-option = ["D:\\Application\\cangjie\\modules\\windows_x86_64_llvm\\stdx\\dynamic\\stdx"]
+    path-option = ["${CANGJIE_HOME}\\modules\\windows_x86_64_llvm\\stdx\\dynamic\\stdx"]
 
 [target.aarch64-apple-darwin]                                              
   [target.aarch64-apple-darwin.bin-dependencies]
