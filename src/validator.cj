@@ -24,10 +24,40 @@ func serverURLValidator(str: String): ?URL {
     if (let Some(m) <- r.find(str, group: true)) {
         var matchedURL = m.matchString()
         let scheme = m.matchString("scheme")
-        if (scheme == "") {
-            matchedURL = "udp://${matchedURL}"
-        } 
+
+        if (scheme == "" || scheme == "udp" || scheme == "tcp" || scheme == "tls") {
+            let path = m.matchString("path")
+            if (path != "") {
+                return None // Path is not allowed for udp, tcp, or tls schemes
+            }
+
+            let domain = m.matchString("domain")
+            if (domain != "") {
+                matchedURL = replaceDomainWithIP(matchedURL, "") ?? return None
+            }
+
+            if (scheme == "") {
+                matchedURL = "udp://" + matchedURL // Default to udp if no scheme is provided
+            }
+
+            let port = m.matchString("port")
+            if (port == "") {
+                if (scheme == "tls") {
+                    matchedURL += ":853" // Default port for DNS over TLS
+                } else {
+                    matchedURL += ":53" // Default port for DNS
+                }
+            }
+        }
         return URL.parse(matchedURL)
+    }
+    return None
+}
+
+func replaceDomainWithIP(input: String, ip: String): ?String {
+    let r = Regex("${domainRegex}")
+    if (r.matches(input)) {
+        return r.replace(input, ip)
     }
     return None
 }
