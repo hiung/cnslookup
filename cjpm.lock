@@ -1,4 +1,4 @@
 version = 0
 
 [requires]
-  dnsmsg = {git = "https://github.com/hiung/dnsmsg.git", commitId = "36b6f3eee9e73bcb3976f1f2b5ef4b7bea609ba8"}
+  dnsmsg = {git = "https://github.com/hiung/dnsmsg.git", commitId = "0a070465df6f595767a8a3dd6bf3f10f7484d112"}
