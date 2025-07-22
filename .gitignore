@@ -11,3 +11,4 @@ target/
 */*.cjo
 */*.lock
 */*.dmp
+cjpm.lock

@@ -18,14 +18,6 @@ main(args: Array<String>): Int64 {
     // Print the response message
     printServer(serverURL)
     printMessage(respMsg)
-    println(respMsg.header.id)
-    println(respMsg.header.flags.response)
-    println(respMsg.header.flags.opCode)
-    println(respMsg.header.flags.recursionAvailable)
-    println(respMsg.header.flags.rCode)
-    println("========")
-    println(reqMsg.toBytes())
-
 
     return 0
 }
