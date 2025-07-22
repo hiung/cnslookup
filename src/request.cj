@@ -27,7 +27,7 @@ func DNSRequest(reqMsg: Message, serverURL: URL): Message {
 func UdpRequest(reqMsg: Message, serverURL: URL): Message {
     let payload = reqMsg.toBytes()
     let port = UInt16.parse(serverURL.port)
-    
+
     let respMsgBuf = Array<UInt8>(512, repeat: 0)
     // Create a UDP socket and send the request
     try (udpSocket = UdpSocket(bindAt: 0)) {
@@ -97,7 +97,11 @@ func TlsRequest(reqMsg: Message, serverURL: URL): Message {
 func HttpsRequest(reqMsg: Message, serverURL: URL): Message {
     let payload = reqMsg.toBytes()
     // Create a HTTP client with TLS configuration
-    let client = ClientBuilder().tlsConfig(TlsClientConfig()).writeTimeout(TIMEOUT).readTimeout(TIMEOUT).build()
+    let client = ClientBuilder()
+        .tlsConfig(TlsClientConfig())
+        .writeTimeout(TIMEOUT)
+        .readTimeout(TIMEOUT)
+        .build()
     // Prepare the HTTP request
     let req = HttpRequestBuilder()
         .method("POST")

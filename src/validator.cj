@@ -11,10 +11,10 @@ const ipv6Regex = #"(?<ipv6>\[((([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4})|(([0-9a-
 const portRegex = #":(?<port>[0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])"#
 const pathRegex = #"(?<path>((\/(?!\/))[^\s\/\\:]*)*)"#
 
-func domainValidator(domain: String): ?Name {
+func domainValidator(str: String): ?Name {
     let r = Regex("^${domainRegex}$")
-    if (r.matches(domain)) {
-        return Name(domain)
+    if (r.matches(str)) {
+        return Name(str)
     }
     return None
 }
@@ -60,4 +60,12 @@ func replaceDomainWithIP(input: String, ip: String): ?String {
         return r.replace(input, ip)
     }
     return None
+}
+
+func typeValidator(str: String): ?UInt16 {
+    try {
+        return parseType(str)
+    } catch (_) {
+        return None
+    }
 }
