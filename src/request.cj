@@ -74,7 +74,9 @@ func TlsRequest(reqMsg: Message, serverURL: URL): Message {
     try (tcpSocket = TcpSocket(serverURL.hostName, port)) {
         tcpSocket.connect(timeout: TIMEOUT)
         // Upgrade to TLS
-        try (tlsSocket = TlsSocket.client(tcpSocket)) {
+        var config = TlsClientConfig()
+        config.verifyMode = TrustAll
+        try (tlsSocket = TlsSocket.client(tcpSocket, clientConfig: config)) {
             // Perform the TLS handshake
             tlsSocket.handshake()
             // Send the request
@@ -97,8 +99,10 @@ func TlsRequest(reqMsg: Message, serverURL: URL): Message {
 func HttpsRequest(reqMsg: Message, serverURL: URL): Message {
     let payload = reqMsg.toBytes()
     // Create a HTTP client with TLS configuration
+    var config = TlsClientConfig()
+    config.verifyMode = TrustAll
     let client = ClientBuilder()
-        .tlsConfig(TlsClientConfig())
+        .tlsConfig(config)
         .writeTimeout(TIMEOUT)
         .readTimeout(TIMEOUT)
         .build()
