@@ -37,6 +37,7 @@ func UdpRequest(reqMsg: Message, serverURL: URL): Message {
         udpSocket.sendTo(IPSocketAddress(serverURL.hostName, port), payload)
         udpSocket.receiveFrom(respMsgBuf)
     }
+    println(respMsgBuf)
     // Convert the response buffer to a Message object
     return Message.fromBytes(ByteBuffer(respMsgBuf))
 }
@@ -61,6 +62,7 @@ func TcpRequest(reqMsg: Message, serverURL: URL): Message {
         respMsgBuf = Array<UInt8>(Int64(readLength), repeat: 0)
         tcpSocket.read(respMsgBuf)
     }
+    println(respMsgBuf)
     // Convert the response buffer to a Message object
     return Message.fromBytes(ByteBuffer(respMsgBuf))
 }
@@ -90,6 +92,7 @@ func TlsRequest(reqMsg: Message, serverURL: URL): Message {
             tlsSocket.read(respMsgBuf)
         }
     }
+    println(respMsgBuf)
     // Convert the response buffer to a Message object
     return Message.fromBytes(ByteBuffer(respMsgBuf))
 }
@@ -121,6 +124,7 @@ func HttpsRequest(reqMsg: Message, serverURL: URL): Message {
     // Read the response body into a buffer
     let respMsgBuf = Array<UInt8>(resp.bodySize.getOrThrow(), repeat: 0)
     resp.body.read(respMsgBuf)
+    println(respMsgBuf)
     client.close()
     return Message.fromBytes(ByteBuffer(respMsgBuf))
 }
