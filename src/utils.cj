@@ -4,6 +4,17 @@ import std.env.*
 import stdx.encoding.url.*
 import dnsmsg.*
 
+const USAGE: String = #"Usage: cnslookup [OPTIONS] <domain> <dns-server-url>
+Arguments:
+    <domain>            The domain name to lookup
+    <dns-server-url>    The DNS server url, udp://, tcp://, tls://, https:// supported
+Options:
+    -h, --help          Show help message and exit
+    -t, --type TYPE     Set question type for DNS query (default: A)
+Examples:
+    cnslookup example.com x.x.x.x
+    cnslookup example.com tcp://x.x.x.x:53 --type=A"#
+
 func exit(code: Int64, message: String): Nothing {
     println(message)
     exit(code)
