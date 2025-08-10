@@ -17,5 +17,4 @@ main(args: Array<String>): Int64 {
     printMessage(respMsg)
 
     return 0
-
 }
